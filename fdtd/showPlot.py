@@ -37,6 +37,8 @@ def plotEo(detector,period):
     elif 'down' in detector.name:
         H = -torch.stack(detector.H[:])[:,:,1]
     else: return
+    if len(Ez)!=len(H):
+        Ez = Ez[:len(H)]
     power = np.array((Ez*H).to('cpu'))
     power = np.sum(power,axis=1)
     power = np.convolve(power,ax,mode='valid')
