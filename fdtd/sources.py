@@ -17,6 +17,7 @@ from .typing import Tuple, Number, ListOrSlice, List
 # relatvie
 from .grid import Grid
 from .backend import backend as bd
+import numpy as np
 
 ## PointSource class
 class PointSource:
@@ -255,3 +256,43 @@ class LineSource:
         z = f"[{self.z[0]}, ... , {self.z[-1]}]"
         s += f"        @ x={x}, y={y}, z={z}\n"
         return s
+
+class oneDirSource(LineSource):
+    def __init__(
+        self,
+        period: Number = 15,
+        power: float = 1.0,
+        phase_shift: float = 0.0,
+        name: str = None,
+        dir: str='right',
+    ):
+        super().__init__(
+            period,
+            power,
+            phase_shift,
+            name,
+        )
+        ma = {'right':0,'up':1,'left':2,'down':3}
+        self.dir = ma[dir]
+    def update_H(self):
+        q = self.grid.time_steps_passed
+        if self.dir == 2 or self.dir == 1:
+            q -= 1
+            # if q==-1 : return
+        vect = self.profile * sin(2 * pi * q / self.period + self.phase_shift)
+        if self.dir == 0:
+            for x, y, z, value in zip(self.x, self.y, self.z, vect):
+                self.grid.H[x, y, z, 0] += value
+        elif self.dir == 1:
+            for x, y, z, value in zip(self.x, self.y, self.z, vect):
+                self.grid.H[x, y, z, 1] += value
+        elif self.dir == 2:
+            for x, y, z, value in zip(self.x, self.y, self.z, vect):
+                self.grid.H[x, y, z, 0] -= value
+        elif self.dir == 3:
+            for x, y, z, value in zip(self.x, self.y, self.z, vect):
+                self.grid.H[x, y, z, 1] -= value
+    def getEH(self):
+        q = np.arange(self.grid.time_steps_passed)
+        Ez = np.outer(np.sin(2 * pi * q / self.period + self.phase_shift),self.profile.to('cpu'))
+        return Ez, Ez
