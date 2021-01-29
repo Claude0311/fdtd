@@ -169,7 +169,7 @@ class Grid:
         # dictionary containing the objects in the grid
         self.objects = []
 
-    def set_permittivity(epsilon):
+    def set_permittivity(self,epsilon):
         self.inverse_permittivity = bd.ones((self.Nx, self.Ny, self.Nz, 3)) * bd.reciprocal(epsilon)
 
     def _handle_distance(self, distance: Number) -> int:
