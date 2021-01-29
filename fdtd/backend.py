@@ -252,6 +252,11 @@ if TORCH_CUDA_AVAILABLE:
             return torch.arange(
                 start, stop + 0.5 * float(endpoint) * delta, delta, device="cuda"
             )
+        @staticmethod
+        def reciprocal(arr):
+            epsilon = numpy.repeat(arr[:, :, :, numpy.newaxis], 3, axis=3)
+            invP = torch.reciprocal(torch.tensor(epsilon))
+            return invP
 
 
 ## Default Backend
