@@ -255,7 +255,7 @@ if TORCH_CUDA_AVAILABLE:
         @staticmethod
         def reciprocal(arr):
             epsilon = numpy.repeat(arr[:, :, :, numpy.newaxis], 3, axis=3)
-            invP = torch.reciprocal(torch.tensor(epsilon))
+            invP = torch.reciprocal(torch.tensor(epsilon)).to('cuda:0')
             return invP
 
 
