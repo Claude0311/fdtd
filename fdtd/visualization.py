@@ -30,6 +30,8 @@ def visualize(
     srccolor="C0",
     detcolor="C2",
     show=True,
+    maxi=0.002,
+    mini=0.0
 ):
     """ visualize a projection of the grid and the optical energy inside the grid
 
@@ -230,7 +232,7 @@ def visualize(
         plt.gca().add_patch(patch)
 
     # visualize the energy in the grid
-    plt.imshow(bd.numpy(grid_energy), cmap=cmap, interpolation="sinc")
+    plt.imshow(bd.numpy(grid_energy), cmap=cmap, interpolation="sinc",vmax=maxi,vmin=mini)
 
     # finalize the plot
     plt.ylabel(xlabel)
