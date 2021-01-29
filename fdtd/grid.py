@@ -89,6 +89,7 @@ class Grid:
     """
 
     from .visualization import visualize
+    from .showPlot import showEn
 
     def __init__(
         self,
@@ -167,6 +168,9 @@ class Grid:
 
         # dictionary containing the objects in the grid
         self.objects = []
+
+    def set_permittivity(epsilon):
+        self.inverse_permittivity = bd.ones((self.Nx, self.Ny, self.Nz, 3)) * bd.reciprocal(epsilon)
 
     def _handle_distance(self, distance: Number) -> int:
         """ transform a distance to an integer number of gridpoints """

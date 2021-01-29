@@ -120,6 +120,10 @@ class NumpyBackend(Backend):
 
     numpy = staticmethod(numpy.asarray)
     """ convert the array to numpy array """
+    
+    @staticmethod
+    def reciprocal(arr):
+        return 1 / arr
 
 
 # Torch Backend
@@ -202,6 +206,12 @@ if TORCH_AVAILABLE:
                 return arr.numpy()
             else:
                 return numpy.asarray(arr)
+        
+        @staticmethod
+        def reciprocal(arr):
+            epsilon = numpy.repeat(arr[:, :, :, np.newaxis], 3, axis=3)
+            invP = torch.reciprocal(torch.tensor(epsilon))
+            return invP
 
 
 

@@ -4,9 +4,10 @@ __author__ = "Floris laporte"
 __version__ = "0.0.1"
 
 from .grid import Grid
-from .sources import PointSource, LineSource
+from .sources import PointSource, LineSource, oneDirSource
 from .detectors import LineDetector
 from .objects import Object, AbsorbingObject, AnisotropicObject
 from .boundaries import PeriodicBoundary, PML
 from .backend import backend
 from .backend import set_backend
+from .rods import rows,notRows,row2Co,createObs,showRods
