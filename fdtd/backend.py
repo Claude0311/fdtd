@@ -209,7 +209,7 @@ if TORCH_AVAILABLE:
         
         @staticmethod
         def reciprocal(arr):
-            epsilon = numpy.repeat(arr[:, :, :, np.newaxis], 3, axis=3)
+            epsilon = numpy.repeat(arr[:, :, :, numpy.newaxis], 3, axis=3)
             invP = torch.reciprocal(torch.tensor(epsilon))
             return invP
 
