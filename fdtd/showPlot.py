@@ -21,7 +21,7 @@ def plotEi(source,period):
     power = np.convolve(power,ax,mode='valid')
     axx = np.arange(len(power))/period
     plt.plot(axx, power, label=source.name)
-    plt.pause(0.02)
+    # plt.pause(0.02)
 
 def plotEo(detector,period):
     ax = np.ones(period)/period
